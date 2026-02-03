@@ -8,8 +8,15 @@ __pycache__/
 # VS Code
 .vscode/
 
-# OS files
-.DS_Store
-
-# Environment variables
+# Environment
 .env
+
+# Datasets (do NOT upload full medical data)
+data/
+uploads/
+
+# Generated outputs
+static/results/
+
+# Trained models
+models/*.h5
