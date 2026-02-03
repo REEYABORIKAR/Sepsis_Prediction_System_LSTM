@@ -1,64 +1,30 @@
-Sepsis Prediction System
-This project is a Flask-based web application that utilizes a Long Short-Term Memory (LSTM) deep learning model to predict the risk of sepsis in patients based on physiological data.
+If you find the standard documentation a bit dry, here is a more high-voltage breakdown of the **Sepsis Prediction System**.
 
-Project Structure
-The project is organized as follows:
+### ⚡ The "Too Long; Didn't Read" Version
 
-app.py: The main Flask application script that handles file uploads, model inference, and rendering the web interface.
+This isn't just a spreadsheet; it’s a **Deep Learning Early Warning System**. It takes messy hospital data and uses an **LSTM (Long Short-Term Memory) network**—a type of AI designed to "remember" patterns over time—to spot sepsis before it becomes a crisis.
 
-scripts/:
+### 🛠️ What’s Happening Under the Hood?
 
-data_preprocessing.py: Contains functions to load, clean, and normalize .psv clinical data files for training.
+* **The Brain (LSTM Model):** Unlike basic math, this model looks at the *sequence* of a patient's vitals. It processes features across time to calculate a risk percentage.
+* **Data Cleanup on the Fly:** The system automatically handles missing clinical data using "forward-filling" (using the last known stable value) and normalization so the AI doesn't get confused by different scales.
+* **Instant Visuals:** The moment you upload a `.psv` file, the app generates a custom PNG graph showing the risk trend, so you can literally see if a patient is stabilizing or crashing.
 
-train_model.py: Script to build, train, and save the LSTM model.
+### 🚨 Risk Tier Breakdown
 
-templates/:
+The system doesn't just give you a number; it gives you a directive:
 
-index.html: The frontend interface for uploading patient data and viewing results.
+* **Low (<30%):** "Patient is stable. Keep an eye on them".
+* **Moderate (30-70%):** "Heads up. Start reviewing lab trends more closely".
+* **High (≥70%):** **"Immediate clinical attention recommended"**.
 
-utils.py: Helper functions for real-time data preprocessing, generating patient summaries, and interpreting risk levels.
+### 📂 File Cheat Sheet
 
-.gitignore: Specifies files and directories to be ignored by Git, such as virtual environments and Python caches.
+| File | Its Real Job |
+| --- | --- |
+| **`app.py`** | The "Manager"—routes files, runs the model, and builds the webpage. |
+| **`utils.py`** | The "Swiss Army Knife"—preps data, calculates stats, and writes the clinical notes. |
+| **`train_model.py`** | The "Gym"—where the AI is actually built and taught how to recognize sepsis. |
+| **`index.html`** | The "Face"—the clean, CSS-styled dashboard where all the info lands. |
 
-Features
-File Upload: Accepts patient data in .psv (pipe-separated values) format.
-
-Real-time Prediction: Uses a trained LSTM model to calculate a sepsis risk percentage.
-
-Risk Categorization: Classifies risk into three levels:
-
-Low: Risk score < 30%.
-
-Moderate: Risk score between 30% and 70%.
-
-High: Risk score ≥ 70%.
-
-Visualizations: Generates a graph showing the sepsis risk trend over time.
-
-Patient Summary: Displays key statistics such as Average Heart Rate, Maximum White Blood Cell count, and Minimum Mean Arterial Pressure.
-
-Clinical Interpretation: Provides recommendations based on the predicted risk level.
-
-Installation and Setup
-Environment: It is recommended to use a virtual environment.
-
-Dependencies: Ensure flask, pandas, numpy, tensorflow, matplotlib, and scikit-learn are installed.
-
-Model Training:
-
-Place training data in a data/ folder.
-
-Run python scripts/train_model.py to train and save the model to models/lstm_model.h5.
-
-Running the App:
-
-Execute python app.py.
-
-Access the application at http://127.0.0.1:5000/.
-
-Usage
-Navigate to the web interface.
-
-Upload a .psv file containing patient physiological data.
-
-Click "Predict" to view the risk analysis, trend graph, and clinical summary.
+Basically, it's a tool designed to turn "boring" raw data into life-saving insights in about two clicks.
