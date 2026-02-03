@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sepsis Risk Predictor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Roboto:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .btn-upload, .btn-predict {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%;
+            display: block;
+        }
+
+        .btn-upload:hover, .btn-predict:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .btn-predict {
+            background-color: #28a745;
+        }
+
+        .btn-predict:hover {
+            background-color: #218838;
+        }
+
+        .result-card {
+            padding: 20px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .result-card.low {
+            background-color: #28a745;
+        }
+
+        .result-card.moderate {
+            background-color: #ff8c00;
+        }
+
+        .result-card.high {
+            background-color: #dc3545;
+        }
+
+        .graph {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .summary-table {
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f1f1f1;
+        }
+
+        .interpretation {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .error-message {
+            background-color: #dc3545;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🩺 Sepsis Risk Prediction</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" accept=".psv" required class="btn-upload">
+            <button type="submit" class="btn-predict">Predict</button>
+        </form>
+
+        {% if error %}
+            <div class="error-message">{{ error }}</div>
+        {% endif %}
+
+        {% if risk_percent %}
+            <div class="result-card {{ risk_label|lower }}">
+                <h3>Risk Level: {{ risk_label }} ({{ risk_percent }}%)</h3>
+            </div>
+
+            <div class="graph">
+                <h3>Risk Trend Over Time</h3>
+                <img src="/{{ trend_image }}" alt="Risk Trend" width="80%">
+            </div>
+
+            <div class="summary-table">
+                <h3>Patient Summary</h3>
+                <table>
+                    {% for key, value in summary.items() %}
+                    <tr>
+                        <th>{{ key }}</th>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="interpretation">
+                <h3>Interpretation</h3>
+                <p>{{ interpretation }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
